@@ -1,17 +1,12 @@
-﻿//using System.Collections.Generic;
-
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Common;
-using Mapster;
 using RiderAspNetMvc.Services;
 using RiderAspNetMvc.ViewModels;
-using Common;
 
 namespace RiderAspNetMvc.Controllers {
-    public class StudentController : Controller {
-        private readonly StudentService service; // = new StudentService();
-        private bool IsAjaxOrPartial() => Request.IsAjaxRequest() || ControllerContext.IsChildAction;
-
+    public class StudentController : BaseController {
+        private readonly StudentService service; 
+        
         public StudentController() : this(new StudentService()) { }
         public StudentController(StudentService service) => this.service = service;
 
@@ -19,9 +14,9 @@ namespace RiderAspNetMvc.Controllers {
         public ActionResult Index() => View();
 
         public ActionResult List(int? id = null, string orderBy = null, string filter = null) {
-            var model = service.ListAll(orderBy);
+            var model = service.ListAll();
             if (id != null) ViewBag.Created = id;
-            return IsAjaxOrPartial() ? (ActionResult) PartialView(model) : View(model);
+            return View(model);
         }
 
         public ActionResult Details(int? id = null) {
@@ -59,5 +54,21 @@ namespace RiderAspNetMvc.Controllers {
             ModelState.AddModelErrors("", result.Errors);
             return View(student);
         }
+    }
+
+    public class BaseController : Controller
+    {
+        private bool IsAjaxOrPartial => Request.IsAjaxRequest() || ControllerContext.IsChildAction;
+
+        protected new ActionResult View(string viewName, object model) 
+            => IsAjaxOrPartial ? (ActionResult)base.PartialView(viewName, model) : base.View(viewName, model);  
+        protected new ActionResult View(string viewName, string masterName) 
+            => IsAjaxOrPartial ? (ActionResult)base.PartialView(viewName, masterName) : base.View(viewName, masterName);
+        protected new ActionResult View(IView view) 
+            => IsAjaxOrPartial ? (ActionResult)base.PartialView(view) : base.View(view);
+        protected new ActionResult View(object model) 
+            => IsAjaxOrPartial ? (ActionResult)base.PartialView(model) : base.View(model);
+        protected new ActionResult View() 
+            => IsAjaxOrPartial ? (ActionResult)base.PartialView() : base.View();
     }
 }

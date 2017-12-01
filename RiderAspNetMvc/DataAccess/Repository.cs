@@ -6,11 +6,11 @@ using RiderAspNetMvc.Services;
 
 namespace RiderAspNetMvc.DataAccess {
     public class Repository<T> : DbSet<T>, IRepository<T> where T : class {
-        private readonly AppContext context;
+        private readonly AppDbContext context;
         private readonly DbSet<T> dbSet;
 
-        public Repository(AppContext dbContext = null) {
-            context = dbContext ?? AppContext.Create();
+        public Repository(AppDbContext dbContext = null) {
+            context = dbContext ?? AppDbContext.Create();
             dbSet = context.Set<T>();
         }
 

@@ -13,9 +13,14 @@ namespace RiderAspNetMvc.Services {
         private readonly IRepository<Student> repository;
 
         public StudentService(IRepository<Student> repo = null) {
-            repository = repo ?? new InMemoryRepository<Student>();
+            repository = repo ?? new Repository<Student>();
+        }
+
+        private void Seed()
+        {
             var id = 0;
-            foreach (var name in new[] { "Eva Luator", "Ben Bitdiddle" }.Select(n => n.Split(' '))) {
+            foreach (var name in new[] { "Eva Luator", "Ben Bitdiddle" }.Select(n => n.Split(' ')))
+            {
                 repository.Insert(new Student {
                     Id = ++id,
                     FirstName = name[0],
