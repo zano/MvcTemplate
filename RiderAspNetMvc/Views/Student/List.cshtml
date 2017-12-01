@@ -14,12 +14,11 @@
         <tbody class="selectable-rows">
         @foreach (var student in Model) {
             var created = student.Id == ViewBag.Created ? "created" : "";
-            <a href="Details/@student.Id">
-                <tr class="@created" data-href="Details/@student.Id" XonClick="document.location = 'Edit/' + id;">
+                <tr class="@created" data-href="@Url.Action("Details", new { student.Id })">
                     <td>@Html.DisplayFor(model => student.FirstName)</td>
                     <td>@Html.DisplayFor(model => student.LastName)</td>
                     <td>@Html.DisplayFor(model => student.EnrollmentsCount)</td>
-                </tr></a>
+                </tr>
         }
         </tbody>
     </table>
@@ -27,9 +26,9 @@
 
 @section scripts {
     <script>
-        $("[data-href]").click(function() {
-            window.location = this.dataset.href;
-        });
+        $("[data-href]")
+            .click(() => window.location = this.dataset.href)
+            .mouseover(() => window.status = this.dataset.href);
 
 //        $("th").each((i, $th) => {
 //            console.log($th.html(
