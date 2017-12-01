@@ -24,6 +24,9 @@ bld/
 [Oo]bj/
 [Ll]og/
 
+# VS Backup
+/[Bb]ackup/
+
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 
@@ -64,3 +67,7 @@ PublishScripts/
 !*.[Cc]ache/
 
 
+App_Data/*
+*.mdf
+*.ldf
+/UpgradeLog.htm
