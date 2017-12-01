@@ -1,0 +1,11 @@
+﻿@model StudentCreate
+
+@using (Html.BeginForm()) {
+ <dl>
+    <dt>@Html.LabelFor(m => m.FirstName) @Html.DisplayNameFor(m => m.FirstName)</dt>
+    <dd>@Html.EditorFor(m => m.FirstName)</dd>
+    
+    <dt>@Html.DisplayNameFor(m => m.LastName)</dt>
+    <dd>@Html.EditorFor(m => m.LastName)</dd>
+ </dl>
+}

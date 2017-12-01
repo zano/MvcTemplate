@@ -1,0 +1,41 @@
+﻿@model List<StudentListItem>
+
+<style>
+    tr:hover td { background: #eee; cursor: pointer}
+</style>
+
+@if (Model.Any()) {
+    <table class="table">  
+        <thead><tr>
+            <th><a href="List?OrderBy=FirstName"> @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)</a></th>
+            <th><a href="List?OrderBy=LastName"> @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)</a></th>
+            <th><a href="List?OrderBy=EnrollmentsCount">@Html.DisplayNameFor(model => model.FirstOrDefault().EnrollmentsCount)</a></th>
+        </tr></thead>
+        <tbody class="selectable-rows">
+        @foreach (var student in Model) {
+            var created = student.Id == ViewBag.Created ? "created" : "";
+            <a href="Details/@student.Id">
+                <tr class="@created" data-href="Details/@student.Id" XonClick="document.location = 'Edit/' + id;">
+                    <td>@Html.DisplayFor(model => student.FirstName)</td>
+                    <td>@Html.DisplayFor(model => student.LastName)</td>
+                    <td>@Html.DisplayFor(model => student.EnrollmentsCount)</td>
+                </tr></a>
+        }
+        </tbody>
+    </table>
+}
+
+@section scripts {
+    <script>
+        $("[data-href]").click(function() {
+            window.location = this.dataset.href;
+        });
+
+//        $("th").each((i, $th) => {
+//            console.log($th.html(
+//                $("<a>")
+//                .text($th.text())
+//                .href("List?OrderBy=" + $th.data("col"))));
+//        });
+    </script>
+}

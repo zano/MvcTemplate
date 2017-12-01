@@ -1,0 +1,18 @@
+﻿@model StudentDetails
+<style>.grade { font-style: italic }</style>
+
+<dl class="dl-horizontal">
+    <dt>@Html.DisplayNameFor(m => m.FirstName)</dt>
+    <dd>@Html.DisplayFor(m => m.FirstName)</dd>
+
+    <dt>@Html.DisplayNameFor(m => m.LastName)</dt>
+    <dd>@Html.DisplayFor(m => m.LastName)</dd>
+
+    <dt>@Html.DisplayNameFor(m => m.Enrollments)</dt>
+    <dd>@foreach (var enrollment in Model.Enrollments) {
+            @Html.DisplayFor(m => enrollment.CourseName)
+            if (enrollment.Grade != null) {
+                <span class="grade">(Html.DisplayFor(m => enrollment.Grade))</span>
+            }
+        }</dd>
+</dl>
