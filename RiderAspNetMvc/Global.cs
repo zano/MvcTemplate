@@ -13,7 +13,7 @@ namespace RiderAspNetMvc
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            AppDbContext.Seed(AppDbContext.Create());
+            //AppDbContext.Seed(AppDbContext.Create());
         }
     }
 }
