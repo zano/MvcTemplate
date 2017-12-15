@@ -1,40 +1,47 @@
 ﻿@model List<StudentListItem>
 
 <style>
-    tr:hover td { background: #eee; cursor: pointer}
+    tr:hover td {
+        background: #eee;
+        cursor: pointer
+    }
 </style>
 
 @if (Model.Any()) {
-    <table class="table">  
-        <thead><tr>
-            <th><a href="List?OrderBy=FirstName"> @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)</a></th>
-            <th><a href="List?OrderBy=LastName"> @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)</a></th>
-            <th><a href="List?OrderBy=EnrollmentsCount">@Html.DisplayNameFor(model => model.FirstOrDefault().EnrollmentsCount)</a></th>
-        </tr></thead>
+    <table class="table">
+        <thead>
+            <tr>
+                <th><a href="List?OrderBy=FirstName"> @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)</a></th>
+                <th><a href="List?OrderBy=LastName"> @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)</a></th>
+                <th><a href="List?OrderBy=EnrollmentsCount">@Html.DisplayNameFor(model => model.FirstOrDefault().EnrollmentsCount)</a></th>
+            </tr>
+        </thead>
         <tbody class="selectable-rows">
-        @foreach (var student in Model) {
-            var created = student.Id == ViewBag.Created ? "created" : "";
+            @foreach (var student in Model)
+            {
+                var created = student.Id == ViewBag.Created ? "created" : "";
                 <tr class="@created" data-href="@Url.Action("Details", new { student.Id })">
                     <td>@Html.DisplayFor(model => student.FirstName)</td>
                     <td>@Html.DisplayFor(model => student.LastName)</td>
                     <td>@Html.DisplayFor(model => student.EnrollmentsCount)</td>
                 </tr>
-        }
+            }
         </tbody>
     </table>
 }
+<script>
+    window.onload = (e) => {
+        console.log("event:", e.type);
 
-@section scripts {
-    <script>
-        $("[data-href]")
-            .click(() => window.location = this.dataset.href)
-            .mouseover(() => window.status = this.dataset.href);
+        $("tr[data-href]")
+            .click(e => { let tr = e.currentTarget; cone.target.dataset, e.target.dataset.href))
+            .mouseover(e => console.log(e));
 
-//        $("th").each((i, $th) => {
-//            console.log($th.html(
-//                $("<a>")
-//                .text($th.text())
-//                .href("List?OrderBy=" + $th.data("col"))));
-//        });
-    </script>
-}
+        //        $("th").each((i, $th) => {
+        //            console.log($th.html(
+        //                $("<a>")
+        //                .text($th.text())
+        //                .href("List?OrderBy=" + $th.data("col"))));
+        //        });
+    }
+</script>
